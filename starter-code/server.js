@@ -35,7 +35,12 @@ app.use(express.static('./public'));
 // REVIEW: Routes for requesting HTML resources
 app.get('/new', function(request, response) {
   // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Identify which line(s) of code from the client-side blog app are interacting with this particular piece of `server.js`, and the name of the method. Do those lines of code interact with or invoke a different portion of the blog, and if so, where? What part of CRUD is being enacted/managed by this particular piece of code?
-  // Put your response here...
+  /*
+   - Corresponds to number 5 in the diagram.
+   - There is no line of code in the blog app that interacts with this particular line of code. It is a new route for the user's browser to go to.
+   - No, this does not invoke any part of the blog.
+   - READ
+  */
   response.sendFile('new.html', {root: './public'});
 });
 
@@ -43,7 +48,12 @@ app.get('/new', function(request, response) {
 // REVIEW: Routes for making API calls to use CRUD Operations on our database
 app.get('/articles', function(request, response) {
   // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Identify which line(s) of code from the client-side blog app are interacting with this particular piece of `server.js`, and the name of the method. Do those lines of code interact with or invoke a different portion of the blog, and if so, where? What part of CRUD is being enacted/managed by this particular piece of code?
-  // Put your response here...
+  /*
+   - Corresponds to numbers 3, 4, and 5 in the diagram.
+   - article.js interacts with this code at line 46 in Article.fetchAll
+   - Article.fetchAll invokes Article.loadAll, when the request is successful, which in turn invoke the Article constructor and pushes the new objects to the array Article.all.
+   - READ
+  */
   client.query('SELECT * FROM articles')
   .then(function(result) {
     response.send(result.rows);
@@ -55,7 +65,12 @@ app.get('/articles', function(request, response) {
 
 app.post('/articles', function(request, response) {
   // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Identify which line(s) of code from the client-side blog app are interacting with this particular piece of `server.js`, and the name of the method. Do those lines of code interact with or invoke a different portion of the blog, and if so, where? What part of CRUD is being enacted/managed by this particular piece of code?
-  // Put your response here...
+  /*
+   - Corresponds to numbers 3 and 5 in the diagram. ( 4 being if it was successful or not)
+   - article.js interacts with this code at line 70 in Article.prototype.insertRecord
+   - No, this does not invoke any other part of the blog, besides acting on the instance of the object.
+   - CREATE
+  */
   client.query(
     `INSERT INTO
     articles(title, author, "authorUrl", category, "publishedOn", body)
@@ -80,7 +95,12 @@ app.post('/articles', function(request, response) {
 
 app.put('/articles/:id', function(request, response) {
   // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Identify which line(s) of code from the client-side blog app are interacting with this particular piece of `server.js`, and the name of the method. Do those lines of code interact with or invoke a different portion of the blog, and if so, where? What part of CRUD is being enacted/managed by this particular piece of code?
-  // Put your response here...
+  /*
+   - Corresponds to numbers 3 and 5 in the diagram. (4 being if it was successful or not)
+   - article.js interacts with this code at line 89 in Article.prototype.updataRecord
+   - No, this does not invoke any other part of the blog, besides acting on the instance of the object.
+   - UPDATE
+  */
   client.query(
     `UPDATE articles
     SET
