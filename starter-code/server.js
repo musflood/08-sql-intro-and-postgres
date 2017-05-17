@@ -128,6 +128,12 @@ app.put('/articles/:id', function(request, response) {
 app.delete('/articles/:id', function(request, response) {
   // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Identify which line(s) of code from the client-side blog app are interacting with this particular piece of `server.js`, and the name of the method. Do those lines of code interact with or invoke a different portion of the blog, and if so, where? What part of CRUD is being enacted/managed by this particular piece of code?
   // Put your response here...
+  /*
+   - Corresponds to numbers 3 and 5 in the diagram. (4 being if it was successful or not)
+   - article.js interacts with this code at line 78 in Article.prototype.deleteRecord
+   - No, this does not invoke any other part of the blog, besides acting on the instance of the object.
+   - DESTROY
+  */
   client.query(
     `DELETE FROM articles WHERE article_id=$1;`,
     [request.params.id]
@@ -143,6 +149,12 @@ app.delete('/articles/:id', function(request, response) {
 app.delete('/articles', function(request, response) {
   // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Identify which line(s) of code from the client-side blog app are interacting with this particular piece of `server.js`, and the name of the method. Do those lines of code interact with or invoke a different portion of the blog, and if so, where? What part of CRUD is being enacted/managed by this particular piece of code?
   // Put your response here...
+  /*
+   - Corresponds to numbers 3 and 5 in the diagram. (4 being if it was successful or not)
+   - article.js interacts with this code at line 59 in Article.truncaeTable
+   - No, this does not invoke any other part of the blog.
+   - DESTROY
+  */
   client.query(
     'DELETE FROM articles;'
   )
@@ -156,6 +168,7 @@ app.delete('/articles', function(request, response) {
 
 // COMMENT: What is this function invocation doing?
 // Put your response here...
+// this will create a table if it doesn't exist, then it calls the loadArticles which fills the DB if empty
 loadDB();
 
 app.listen(PORT, function() {
@@ -168,6 +181,12 @@ app.listen(PORT, function() {
 function loadArticles() {
   // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Identify which line(s) of code from the client-side blog app are interacting with this particular piece of `server.js`, and the name of the method. Do those lines of code interact with or invoke a different portion of the blog, and if so, where? What part of CRUD is being enacted/managed by this particular piece of code?
   // Put your response here...
+  /*
+   - Corresponds to numbers 3 and 4 in the diagram.
+   - server.js interacts with this code at line 208 in loadDB, it does not interct with the client-side blog app
+   - No, this does not invoke any other part of the blog
+   - CREATE
+  */
   client.query('SELECT COUNT(*) FROM articles')
   .then(result => {
     // REVIEW: result.rows is an array of objects that Postgres returns as a response to a query.
@@ -194,6 +213,12 @@ function loadArticles() {
 function loadDB() {
   // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Identify which line(s) of code from the client-side blog app are interacting with this particular piece of `server.js`, and the name of the method. Do those lines of code interact with or invoke a different portion of the blog, and if so, where? What part of CRUD is being enacted/managed by this particular piece of code?
   // Put your response here...
+  /*
+   - Corresponds to numbers 3 and 4 in the diagram.
+   - server.js invokes at line 159, it does not interct with the client-side blog app
+   - No, this does not invoke any other part of the blog
+   - CREATE // his will create a table if it doesn't exist, then it calls the loadArticles which fills the DB if empty
+  */
   client.query(`
     CREATE TABLE IF NOT EXISTS articles (
       article_id SERIAL PRIMARY KEY,
